@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FootballTournament:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/FootballTournament_jar</output-path>
+    <root id="archive" name="FootballTournament.jar">
+      <element id="module-output" name="FootballTournament" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.0.1/annotations-24.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
