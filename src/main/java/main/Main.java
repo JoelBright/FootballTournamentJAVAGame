@@ -5,12 +5,35 @@ import football.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
 public class Main {
   public static void main(String[] args) {
+    Main mainApp = new Main();
+    mainApp.runTournament(new Scanner(System.in));
+  }
+
+  public void runTournament(Scanner scanner) {
     System.out.println("Football game:");
 
+    Tournament tour = setupTournament();
+    System.out.println(tour);
+
+    boolean replay;
+    do {
+      System.out.println(tour.beginTournament());
+      System.out.println("Replay the tournament? (Y/N)");
+      replay = getUserInput(scanner);
+    } while ( replay );
+  }
+
+  public boolean getUserInput(Scanner scanner) {
+    if ( scanner.hasNext() ) {
+      String userInput = scanner.next();
+      return userInput.equalsIgnoreCase("Y");
+    }
+    return false;
+  }
+
+  public Tournament setupTournament() {
     Team t1 = new Team("Real Madrid");
     Team t2 = new Team("Chelsea FC");
     Team t3 = new Team("Arsenal FC");
@@ -96,21 +119,9 @@ public class Main {
     matchList.add(m3);
 
     Tournament tour = new Tournament("UK tour");
-
     tour.setTeams(teamList);
     tour.setMatches(matchList);
 
-    System.out.println(tour);
-    boolean replay = false;
-    do {
-      System.out.println(tour.beginTournament());
-      System.out.println("Replay the tournament? (Y/N)");
-      Scanner scanner = new Scanner(System.in);
-      if ( scanner.hasNext() ) {
-        String userInput = scanner.next();
-        replay = userInput.equalsIgnoreCase("Y");
-      }
-    } while ( replay );
+    return tour;
   }
-
 }
