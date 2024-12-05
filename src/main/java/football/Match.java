@@ -46,7 +46,7 @@ public class Match {
     }
     switch ( position ) {
       case STRIKER -> {
-        activity = (int) (Math.random() * (max*2 - min*2 + 1) + min*2);
+        activity = (int) (Math.random() * (max * 2 - min * 2 + 1) + min * 2);
         positiveScoreActivity += activity;
       }
       case MIDFIELDER_WM -> {
@@ -54,11 +54,11 @@ public class Match {
         positiveScoreActivity += activity;
       }
       case MIDFIELDER_CM -> {
-        activity = (int) (Math.random() * (max/2 + 1) + min);
+        activity = (int) (Math.random() * (max / 2 + 1) + min);
         positiveScoreActivity += activity;
       }
       case DEFENDER_CB -> {
-        activity = (int) (Math.random() * (max*2 + 1) + min);
+        activity = (int) (Math.random() * (max * 2 + 1) + min);
         negativeScoreActivity -= activity;
       }
       case DEFENDER_FB -> {
@@ -66,10 +66,10 @@ public class Match {
         negativeScoreActivity -= activity;
       }
       case GOALKEEPER -> {
-        activity = (int) (Math.random() * (max/2 + 1) + min);
+        activity = (int) (Math.random() * (max / 2 + 1) + min);
         negativeScoreActivity -= activity;
       }
-      default -> throw new IllegalStateException("Unexpected value: " + position);
+      default -> activity = 0;
     }
     return activity;
   }
@@ -105,17 +105,16 @@ public class Match {
     System.out.println(
         "\n2nd half concluded!!\n" + "Final score: " + score1 + "-" + score2 + " Home Team:" + team1.getName() + " scored:" + score1 + " while Guest Team:" + team2.getName() + " scored:" + score2);
 
-    Team matchWinner;
     while ( score1 == score2 ) {
       System.out.println("\nOvertime triggered:");
       gameplayOccurs(true);
       System.out.println("Overtime concluded!!");
     }
 
-    matchWinner = (score1 > score2) ? team1 : team2;
+    winner = (score1 > score2) ? team1 : team2;
     System.out.println(
-        "The match " + team1.getName() + " v.s " + team2.getName() + " was won by: " + matchWinner.getName() + "!!!\n");
+        "The match " + team1.getName() + " v.s " + team2.getName() + " was won by: " + winner.getName() + "!!!\n");
 
-    return matchWinner;
+    return winner;
   }
 }

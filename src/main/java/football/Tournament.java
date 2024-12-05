@@ -15,12 +15,24 @@ public class Tournament {
     this.matches = new ArrayList<>();
   }
 
-  public static int getValueOrDefault(@org.jetbrains.annotations.NotNull Map<String, Integer> map, String key) {
+  int getValueOrDefault(@org.jetbrains.annotations.NotNull Map<String, Integer> map, String key) {
     return map.computeIfAbsent(key, k -> 0);
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public ArrayList<Team> getTeams() {
+    return teams;
   }
 
   public void setTeams(ArrayList<Team> teams) {
     this.teams = teams;
+  }
+
+  public ArrayList<Match> getMatches() {
+    return matches;
   }
 
   public void setMatches(ArrayList<Match> matches) {
@@ -40,7 +52,6 @@ public class Tournament {
 
   public String beginTournament() {
     System.out.println("\nThe " + name + " has begun!!\n");
-    boolean tie = true;
     HashMap<String, Integer> matchWinners = new HashMap<>();
 
     for ( Match tournamentMatch : matches ) {
@@ -50,15 +61,23 @@ public class Tournament {
 
     System.out.println("\nTournament points: ");
     StringBuilder tournamentResult = new StringBuilder("The " + name + " has resulted in Team ");
+    ArrayList<String> highestScorers = new ArrayList<>();
+    int higestScore = 0;
     for ( String teamName : matchWinners.keySet() ) {
       int pointsEarned = matchWinners.get(teamName);
-      System.out.println("Team:" + teamName + " points: " + pointsEarned);
-      if ( pointsEarned > 1 ) {
-        tournamentResult.append(teamName).append(" emerging victorious!!!");
-        tie = false;
+      higestScore = Math.max(pointsEarned, higestScore);
+      ArrayList<String> lowScorers = new ArrayList<>();
+      for ( String scorer: highestScorers) {
+        if( matchWinners.get(scorer) < higestScore ) lowScorers.add(scorer);
       }
+      highestScorers.removeAll(lowScorers);
+      lowScorers.clear();
+      if ( pointsEarned == higestScore ) highestScorers.add(teamName);
+      System.out.println("Team:" + teamName + " points: " + pointsEarned);
     }
-    if ( tie ) tournamentResult.append("a three-way tie!!!");
+    if ( highestScorers.size() == 1 ) {
+      tournamentResult.append(highestScorers.get(0)).append(" emerging victorious!!!");
+    } else tournamentResult.append("a grand tie!!!");
 
     return tournamentResult.toString();
   }

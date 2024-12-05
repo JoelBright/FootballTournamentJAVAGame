@@ -1,23 +1,13 @@
-name: AI Code Review
+name: Greetings
 
-on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+on: [pull_request, issues]
 
 jobs:
-  ai_code_review:
+  greeting:
     runs-on: ubuntu-latest
-
     steps:
-    - name: AI Code Review
-      uses: AleksandrFurmenkovOfficial/ai-code-review@v0.4.1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }} # Token for accessing PRs, file reading, and commenting capabilities
-        openai_api_key: ${{ secrets.OPENAI_API_KEY }} # Access to the GPT-4 class model
-        owner: ${{ github.repository_owner }}
-        repo: ${{ github.event.repository.name }}
-        pr_number: ${{ github.event.number }}
-        include_extensions: ${{ steps.inputs.include_extensions }} # Optional, specify file types to include e.g., ".py,.js,.html"
-        exclude_extensions: ${{ steps.inputs.exclude_extensions }} # Optional, specify file types to exclude
-        include_paths: ${{ steps.inputs.include_paths }} # Optional, specify directories to include
-        exclude_paths: ${{ steps.inputs.exclude_paths }} # Optional, specify directories to exclude
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: 'Thank you for raising your first issue. We are very happy to have you here'
+          pr-message: 'Thank you for raising your first pr. We are very happy to have you here'
